@@ -1,5 +1,3 @@
-#![no_std]
-
 use core::arch::x86_64::__cpuid_count;
 
 use cpu::{asm_read_msr, asm_write_msr, MSRValue};
