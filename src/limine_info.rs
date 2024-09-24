@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use limine::{
     request::{FramebufferRequest, HhdmRequest, MemoryMapRequest, RsdpRequest},
     BaseRevision,

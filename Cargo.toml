@@ -5,8 +5,8 @@ edition = "2021"
 license-file = "LICENSE"
 
 [[bin]]
-name = "k.sys"
-path = "src"
+name = "k64"
+path = "src/main.rs"
 test = false
 bench = false
 
