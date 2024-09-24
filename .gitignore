@@ -1,5 +1,7 @@
 /target
-
+/limine
+/iso_root
+*.iso
 
 # Added by cargo
 #

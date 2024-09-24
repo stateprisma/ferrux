@@ -3,6 +3,16 @@
 version = 3
 
 [[package]]
+name = "Ferrux"
+version = "0.1.0"
+dependencies = [
+ "derive-getters",
+ "ignore-result",
+ "limine",
+ "spin",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -48,16 +58,6 @@ checksum = "07af8b9cdd281b7915f413fa73f29ebd5d55d0d3f0155584dade1ff18cea1b17"
 dependencies = [
  "autocfg",
  "scopeguard",
-]
-
-[[package]]
-name = "prisma-os"
-version = "0.1.0"
-dependencies = [
- "derive-getters",
- "ignore-result",
- "limine",
- "spin",
 ]
 
 [[package]]
