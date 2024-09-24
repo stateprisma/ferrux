@@ -1,0 +1,13 @@
+[package]
+name = "amd64"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "amd64"
+path = "src"
+test = false
+bench = false
+
+[dependencies]
+spin = { version = "0.9", features = ["ticket_mutex"] }
