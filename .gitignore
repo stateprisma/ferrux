@@ -1,5 +1,6 @@
 /target
 /limine
 /iso_root
+/.idea
 *.fd
 *.iso
