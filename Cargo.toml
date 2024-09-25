@@ -11,7 +11,7 @@ test = false
 bench = false
 
 [dependencies]
-derive-getters = "0.4"
+derive-getters = "0.5"
 ignore-result = "0.2"
 spin = { version = "0.9", features = ["ticket_mutex"] }
 limine = "0.3"
