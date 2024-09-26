@@ -1,5 +1,3 @@
-pub mod cpu {
-    pub unsafe fn halt() -> ! {
-        loop{}
-    }
-}
+pub mod pl011;
+pub mod log;
+pub mod cpu;

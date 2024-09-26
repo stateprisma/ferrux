@@ -1,9 +1,13 @@
 #![no_std]
 #![no_main]
+#![feature(format_args_nl)]
 
 mod kpanic;
 mod arch;
 mod limine_info;
+
+#[macro_use]
+mod log;
 
 #[no_mangle]
 unsafe extern "C" fn kentry() -> ! {
@@ -12,6 +16,7 @@ unsafe extern "C" fn kentry() -> ! {
 
 #[allow(unreachable_code)]
 fn kmain() -> ! {
+    println!("Hello!");
     loop {}
     // Catch this and halt
     panic!("kmain reached after the main loop");
