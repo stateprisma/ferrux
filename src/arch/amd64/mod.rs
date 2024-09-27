@@ -7,6 +7,7 @@ use spin::Lazy;
 
 pub mod cpu;
 pub mod global_asm;
+pub mod interrupts;
 
 pub static CPU_HAS_MSR: Lazy<bool> = Lazy::new(|| {
     let res = unsafe { __cpuid_count(0, 0) };

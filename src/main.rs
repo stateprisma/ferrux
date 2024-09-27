@@ -1,3 +1,4 @@
+#![feature(abi_x86_interrupt)]
 #![no_std]
 #![no_main]
 #![feature(format_args_nl)]
@@ -12,7 +13,7 @@ mod log;
 #[no_mangle]
 #[link_section = ".boot.text"]
 unsafe extern "C" fn kentry() -> ! {
-    kmain();
+    arch::initialize();
 }
 
 #[allow(unreachable_code)]
