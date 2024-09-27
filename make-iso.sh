@@ -10,7 +10,7 @@ fi
 make -C limine
 
 mkdir limine
-tar xvf limine.tar.gz -C limine
+tar xvf limine.tar.gz -C limine 1>/dev/null
 rm limine.tar.gz
 
 rm -rf iso_root
@@ -19,13 +19,19 @@ mkdir iso_root
 (
   cd iso_root || exit 255
   mkdir -p EFI/BOOT
-#  cp ../limine/bin/BOOTAA64.EFI EFI/BOOT
-#  cp ../limine/bin/BOOTX64.EFI EFI/BOOT
-#  cp ../limine/bin/limine .
-  cp -v ../limine/BOOTX64.EFI ./EFI/BOOT/
-  cp -v ../limine/limine-uefi-cd.bin .
-  cp -v ../limine.conf .
-  cp -v ../target/k64.sys .
+
+if [[ $1 == "aarch64" ]]; then
+	cp ../limine/bin/BOOTAA64.EFI EFI/BOOT
+elif [[ $1 == "x64" ]]; then
+	cp ../limine/bin/BOOTX64.EFI EFI/BOOT
+else
+	echo "Wrong '$1' arch provided"
+	exit -1
+fi
+
+ cp ../limine/limine-uefi-cd.bin .
+ cp -v ../target/k64.sys .
+ cp ../limine.conf .
 
   cd ..
   xorriso -as mkisofs \

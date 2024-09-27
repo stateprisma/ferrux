@@ -7,14 +7,14 @@ fn main() {
         "x86_64" => {
             // Tell cargo to pass the Linker script to the Linker...
             println!("cargo:rustc-link-arg=-TLinker/x86_64.ld");
-            println!("cargo:rustc-link-arg=-pie");
+            // println!("cargo:rustc-link-arg=-pie");
             // ...and to re-run if it changes.
             println!("cargo:rerun-if-changed=Linker/x86_64.ld");
         }
         "aarch64" => {
             // Tell cargo to pass the Linker script to the Linker...
             println!("cargo:rustc-link-arg=-TLinker/aarch64.ld");
-            println!("cargo:rustc-link-arg=-pie");
+            // println!("cargo:rustc-link-arg=-pie");
             // ...and to re-run if it changes.
             println!("cargo:rerun-if-changed=Linker/aarch64.ld");
         }

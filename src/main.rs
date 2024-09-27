@@ -10,13 +10,14 @@ mod limine_info;
 mod log;
 
 #[no_mangle]
+#[link_section = ".boot.text"]
 unsafe extern "C" fn kentry() -> ! {
     kmain();
 }
 
 #[allow(unreachable_code)]
 fn kmain() -> ! {
-    println!("Hello!");
+    println!("Hello from prisma");
     loop {}
     // Catch this and halt
     panic!("kmain reached after the main loop");

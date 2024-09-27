@@ -19,6 +19,10 @@ SECTIONS
     /* that is the beginning of the region. */
     . = 0xffffffff80000000;
 
+    .boot.text : {
+        *(.boot.text)
+    } :text
+
     .text : {
         *(.text .text.*)
     } :text
