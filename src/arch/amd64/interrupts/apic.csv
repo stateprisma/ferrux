@@ -1,8 +1,8 @@
 Offset,Register name,Read/Write permissions
-000h - 010h,Reserved,
+000h - 010h,Reserved,None
 020h,LAPIC ID Register,Read/Write
 030h,LAPIC Version Register,Read only
-040h - 070h,Reserved,
+040h - 070h,Reserved,None
 080h,Task Priority Register (TPR),Read/Write
 090h,Arbitration Priority Register (APR),Read only
 0A0h,Processor Priority Register (PPR),Read only
@@ -15,7 +15,7 @@ Offset,Register name,Read/Write permissions
 180h - 1F0h,Trigger Mode Register (TMR),Read only
 200h - 270h,Interrupt Request Register (IRR),Read only
 280h,Error Status Register,Read only
-290h - 2E0h,Reserved,
+290h - 2E0h,Reserved,None
 2F0h,LVT Corrected Machine Check Interrupt (CMCI) Register,Read/Write
 300h - 310h,Interrupt Command Register (ICR),Read/Write
 320h,LVT Timer Register,Read/Write
@@ -26,6 +26,6 @@ Offset,Register name,Read/Write permissions
 370h,LVT Error Register,Read/Write
 380h,Initial Count Register (for Timer),Read/Write
 390h,Current Count Register (for Timer),Read only
-3A0h - 3D0h,Reserved,
+3A0h - 3D0h,Reserved,None
 3E0h,Divide Configuration Register (for Timer),Read/Write
-3F0h,Reserved 
+3F0h,Reserved,None
