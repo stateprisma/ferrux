@@ -4,18 +4,8 @@ pub mod aarch64;
 pub use aarch64::*;
 
 #[cfg(target_arch = "x86_64")]
-pub mod amd64;
+pub mod x86_64;
 #[cfg(target_arch = "x86_64")]
-pub use amd64::*;
-use crate::arch::interrupts::initialize_interrupts;
-use crate::kmain;
+pub use x86_64::*;
 
-pub enum HwTimerMode {
-    Oneshot,
-    Recurring
-}
-
-pub(crate) fn initialize() -> ! {
-    initialize_interrupts();
-    kmain()
-}
+pub mod timers;

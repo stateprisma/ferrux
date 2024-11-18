@@ -1,13 +1,15 @@
-use core::arch::asm;
-use core::arch::x86_64::__cpuid_count;
-
-use crate::arch::global_asm::asm_get_vendor_string;
-use cpu::{asm_read_msr, asm_write_msr, MSRValue};
 use spin::Lazy;
 
-pub mod cpu;
-pub mod global_asm;
-pub mod interrupts;
+use crate::arch::cpu::*;
+use core::arch::{asm, global_asm, x86_64::__cpuid_count};
+
+global_asm! {
+    include_str!("global.asm")
+}
+
+extern "C" {
+    pub(super) fn asm_get_vendor_string(dest: &mut [u8; 12]);
+}
 
 pub static CPU_HAS_MSR: Lazy<bool> = Lazy::new(|| {
     let res = unsafe { __cpuid_count(0, 0) };
@@ -99,6 +101,7 @@ pub fn asm_outdw(port: u16, dword: u32) {
     }
 }
 
+/// reads a word from `port`
 pub fn asm_inw(port: u16) -> u16 {
     let word: u16;
     unsafe {
@@ -113,6 +116,7 @@ pub fn asm_inw(port: u16) -> u16 {
     word
 }
 
+/// reads a dword from `port`
 pub fn asm_indw(port: u16) -> u32 {
     let dword: u32;
     unsafe {
