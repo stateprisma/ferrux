@@ -19,8 +19,13 @@ rules:
     level: warning
     optional: true
     options:
-      - api
-      - web
+      - x86_64
+      - arm64
+      - tools
+      - build
+      - readme
+      - commitlint
+      - license
   subject-empty:
     level: error
   type:
