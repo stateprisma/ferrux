@@ -22,7 +22,6 @@ rules:
       - x86_64
       - arm64
       - tools
-      - build
       - readme
       - commitlint
       - license
