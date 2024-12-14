@@ -1,2 +1,6 @@
 pub mod cpu;
-pub mod global_asm;
+pub mod serial;
+
+pub fn initialize() -> ! {
+    loop {}
+}
