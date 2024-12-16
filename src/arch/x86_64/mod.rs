@@ -1,5 +1,6 @@
 pub mod cpu;
-pub mod serial;
+pub mod log;
+pub mod uart;
 
 pub fn initialize() -> ! {
     loop {}
