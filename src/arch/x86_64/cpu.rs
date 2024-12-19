@@ -1,5 +1,9 @@
+#![allow(clippy::undocumented_unsafe_blocks)]
+
 use core::{arch::asm, arch::x86_64::__cpuid_count, mem::transmute};
 use spin::Lazy;
+
+use super::uart::{Uart, COM1};
 
 pub unsafe fn halt() -> ! {
     loop {
@@ -192,3 +196,5 @@ pub fn asm_indw(port: u16) -> u32 {
     }
     dword
 }
+
+pub fn initialize() {}

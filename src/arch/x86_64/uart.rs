@@ -10,7 +10,7 @@ impl Uart {
     pub fn init_uart(port: u16) -> Self {
         asm_outb(port + 1, 0x00); // Disable interrupts
         asm_outb(port + 3, 0x80); // Enable baud rate divisor
-        asm_outb(port + 0, 0x01); // Divisor hi-byte
+        asm_outb(port, 0x01); // Divisor hi-byte
         asm_outb(port + 1, 0x00); //         lo-byte
         asm_outb(port + 3, 0x03);
         asm_outb(port + 2, 0xC7);

@@ -2,7 +2,7 @@
 
 echo Creating ISO file
 
-curl -SsLO https://ddn.stateprisma.com/limine.tar.gz || exit 1
+curl -SsLO https://static.wwsrl.com/limine/8.6.0/limine.tar.gz || exit 1
 
 if [ ! -d "limine" ]; then
   git clone https://github.com/limine-bootloader/limine.git --branch=v8.x-binary --depth=1;\
@@ -26,7 +26,7 @@ elif [[ $1 == "x64" ]]; then
 	cp ../limine/bin/BOOTX64.EFI EFI/BOOT
 else
 	echo "Wrong '$1' arch provided"
-	exit -1
+	exit 255
 fi
 
  cp ../limine/limine-uefi-cd.bin .

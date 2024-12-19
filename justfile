@@ -19,7 +19,7 @@ run-amd64: make-iso-amd64
     #!/usr/bin/env bash
     if [ ! -f "ovmf_amd64.fd" ]; then
       echo "Downloading OVMF"
-      curl -SL 'https://ddn.stateprisma.com/RELEASEX64_OVMF.fd' -o ovmf_amd64.fd
+      curl -SL 'https://retrage.github.io/edk2-nightly/bin/RELEASEX64_OVMF.fd' -o ovmf_amd64.fd
     else
       echo "Found OVMF image already"
     fi
