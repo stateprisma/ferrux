@@ -25,6 +25,7 @@ rules:
       - readme
       - commitlint
       - license
+      - boot
   subject-empty:
     level: error
   type:
