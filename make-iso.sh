@@ -1,17 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 echo Creating ISO file
 
-curl -SsLO https://static.wwsrl.com/limine/8.6.0/limine.tar.gz || exit 1
-
 if [ ! -d "limine" ]; then
-  git clone https://github.com/limine-bootloader/limine.git --branch=v8.x-binary --depth=1;\
+	git submodule update --init --recursive
 fi
-make -C limine
-
-mkdir limine
-tar xvf limine.tar.gz -C limine 1>/dev/null
-rm limine.tar.gz
 
 rm -rf iso_root
 mkdir iso_root
