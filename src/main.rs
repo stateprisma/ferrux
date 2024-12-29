@@ -15,10 +15,15 @@ mod log;
 
 #[derive(Debug)]
 enum KernelMode {
+    /// Kernel is in early boot stage, assume no hardware is discovered and setup yet.
     EarlyBoot,
+    /// Kernel has found and initialized hardware, but is still in single-user mode.
     SingleUser,
+    /// Kernel is fully setup and initialized, this is the normal mode under most circumstances.
     MultiUser,
+    /// A non fatal non recoverable error has occurred, the system sould inform the user and disable the offending module(s).
     Wounded,
+    /// BSOD has occurred, the system should panic and halt.
     Panicked,
 }
 

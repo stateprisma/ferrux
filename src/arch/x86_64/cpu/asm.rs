@@ -3,8 +3,6 @@
 use core::{arch::asm, arch::x86_64::__cpuid_count, mem::transmute};
 use spin::Lazy;
 
-use super::uart::{Uart, COM1};
-
 pub unsafe fn halt() -> ! {
     loop {
         unsafe {
@@ -62,11 +60,6 @@ pub unsafe fn asm_get_cpu_string(result: &mut [u8; 12]) {
 	    cpuid
 	    mov eax, ebx // Saves ebx into eax to avoid compiler issues
 	    pop rbx //restore rbx
-	    ret
-        mov 0, eax // set eax to 0 to get vendor string
-        cpuid // cpuid call
-        mov eax, ebx // save the value of ebx into eax
-        pop rbx // restores rbx
         ",
         out("eax") a,
         out("edx") b,
@@ -196,5 +189,3 @@ pub fn asm_indw(port: u16) -> u32 {
     }
     dword
 }
-
-pub fn initialize() {}
