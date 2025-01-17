@@ -3,72 +3,7 @@
 use core::{arch::asm, arch::x86_64::__cpuid_count, mem::transmute};
 use spin::Lazy;
 
-pub unsafe fn halt() -> ! {
-    loop {
-        unsafe {
-            asm!("hlt");
-        }
-    }
-}
-
-pub struct MSRValue {
-    pub eax: u32,
-    pub edx: u32,
-}
-
-pub unsafe fn asm_read_msr(selector: u32) -> MSRValue {
-    let mut eax: u32;
-    let mut edx: u32;
-
-    asm!(
-        "rdmsr",
-        in("ecx") selector,
-        out("eax") eax,
-        out("edx") edx,
-    );
-
-    MSRValue { eax, edx }
-}
-
-pub unsafe fn asm_write_msr(selector: u32, value: MSRValue) {
-    asm!(
-        "wrmsr",
-        in("ecx") selector,
-        in("eax") value.eax,
-        in("edx") value.edx,
-    );
-}
-
-pub unsafe fn asm_get_ring() -> u8 {
-    let mut ring: u32;
-    asm!(
-        "mov cs, eax
-        and eax, 3", out("eax") ring,
-    );
-
-    ring as u8
-}
-
-pub unsafe fn asm_get_cpu_string(result: &mut [u8; 12]) {
-    let (mut a, mut b, mut c);
-
-    asm!(
-        "
-	    push rbx //preserve rbx
-	    mov eax, 0 //eax = leaf
-	    mov ecx, 0 //ecx = subleaf
-	    cpuid
-	    mov eax, ebx // Saves ebx into eax to avoid compiler issues
-	    pop rbx //restore rbx
-        ",
-        out("eax") a,
-        out("edx") b,
-        out("ecx") c,
-    );
-    let raw = transmute::<[u32; 3], [u8; 12]>([a, b, c]);
-    // Coppy the result into the result buffer
-    *result = raw;
-}
+use super::cpu::CpuInfo;
 
 pub static CPU_HAS_MSR: Lazy<bool> = Lazy::new(|| {
     let res = unsafe { __cpuid_count(0, 0) };
@@ -188,4 +123,106 @@ pub fn asm_indw(port: u16) -> u32 {
         );
     }
     dword
+}
+
+/// calls lidt with the given pointer
+pub fn asm_lidt(pointer: *const u8) {
+    unsafe {
+        asm!(
+        "
+            lidt [rdi]
+        ",
+        in("rdi") pointer,
+        );
+    }
+}
+
+/// calls lgdt with the given pointer
+pub fn asm_lgdt(pointer: *const u8) {
+    unsafe {
+        asm!(
+        "
+            lgdt [rdi]
+        ",
+        in("rdi") pointer,
+        );
+    }
+}
+
+pub unsafe fn halt() -> ! {
+    loop {
+        unsafe {
+            asm!("hlt");
+        }
+    }
+}
+
+pub struct MSRValue {
+    pub eax: u32,
+    pub edx: u32,
+}
+
+pub unsafe fn asm_read_msr(selector: u32) -> MSRValue {
+    let mut eax: u32;
+    let mut edx: u32;
+
+    asm!(
+        "rdmsr",
+        in("ecx") selector,
+        out("eax") eax,
+        out("edx") edx,
+    );
+
+    MSRValue { eax, edx }
+}
+
+pub unsafe fn asm_write_msr(selector: u32, value: MSRValue) {
+    asm!(
+        "wrmsr",
+        in("ecx") selector,
+        in("eax") value.eax,
+        in("edx") value.edx,
+    );
+}
+
+pub unsafe fn asm_get_ring() -> u8 {
+    let mut ring: u32;
+    asm!(
+        "mov cs, eax
+        and eax, 3", out("eax") ring,
+    );
+
+    ring as u8
+}
+
+pub unsafe fn asm_get_cpu_string(result: &mut [u8; 12]) {
+    let (mut a, mut b, mut c);
+
+    asm!(
+        "
+	    push rbx //preserve rbx
+	    mov eax, 0 //eax = leaf
+	    mov ecx, 0 //ecx = subleaf
+	    cpuid
+	    mov eax, ebx // Saves ebx into eax to avoid compiler issues
+	    pop rbx //restore rbx
+        ",
+        out("eax") a,
+        out("edx") b,
+        out("ecx") c,
+    );
+    let raw = transmute::<[u32; 3], [u8; 12]>([a, b, c]);
+    // Coppy the result into the result buffer
+    *result = raw;
+}
+
+pub unsafe fn cpu_model_fam_stepping() -> CpuInfo {
+    let res = __cpuid_count(1, 0);
+    CpuInfo {
+        stepping: (res.eax & 0xF) as u8,
+        model: ((res.eax >> 4) & 0xF) as u8,
+        family: ((res.eax >> 8) & 0xF) as u8,
+        ext_model: ((res.eax >> 16) & 0xF) as u8,
+        ext_family: ((res.eax >> 20) & 0xFF) as u8,
+    }
 }

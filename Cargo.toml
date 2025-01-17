@@ -13,9 +13,9 @@ bench = false
 [dependencies]
 derive-getters = "0.5"
 ignore-result = "0.2"
-spin = { version = "0.9", features = ["ticket_mutex"] }
+spin = { version = "0.9", features = ["mutex", "ticket_mutex"] }
 limine = "0.3"
-lazy_static = { version = "1.5.0", features = ["spin_no_std"]}
+lazy_static = { version = "1.5.0", features = ["spin_no_std"] }
 
 [target.'cfg(target_arch = "aarch64")'.dependencies]
 aarch64-cpu = "9.4.0"

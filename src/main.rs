@@ -8,7 +8,10 @@ mod arch;
 mod kpanic;
 mod limine_info;
 
+use core::{time::Duration, u128};
+
 use arch::cpu::initialize;
+use spin::Mutex;
 
 #[macro_use]
 mod log;
@@ -27,7 +30,8 @@ enum KernelMode {
     Panicked,
 }
 
-static mut KERNEL_MODE: KernelMode = KernelMode::EarlyBoot;
+static KERNEL_MODE: Mutex<KernelMode> = Mutex::new(KernelMode::EarlyBoot);
+static MONOTONIC_CLOCK: Mutex<u128> = Mutex::new(0);
 
 #[no_mangle]
 #[link_section = ".boot.text"]
@@ -35,6 +39,7 @@ unsafe extern "C" fn kentry() -> ! {
     println!("Kernel is in {:?}", KERNEL_MODE);
     println!("Will now attempt hardware discovery and initialization...");
     initialize();
+    *KERNEL_MODE.lock() = KernelMode::SingleUser;
     kmain();
 }
 
